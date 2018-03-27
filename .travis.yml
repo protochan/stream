@@ -1,6 +1,13 @@
 language: node_js
 node_js:
-  - "8"
+- '8'
 script:
-  - npm test
-
+- npm test
+deploy:
+  provider: npm
+  email: sidmani42@gmail.com
+  api_key:
+    secure: d6T9OlE/fFPNrK1fnBYhFKpioqeRaT/OA6v9L3vKQahwRfbr4zsZiOaTb4tF4h1AdlWOOwgdVZJE9+l73NzwdLPsiqVeLgeF1UpD9Di9bf6MUncd98he+2OjkHUqlJ8LHgj2aLLxfUyk7sEuAX4XWN63Co0nj5HCJpkHfsbQbulYwXDIWmRqK5Oom2M72YJzMXJmmYWUayIIXviRS1VNDZfbsanWZ29NJ7ok9TpM8cRJOUjOAOFLekwVZKJQSDiDTuc7qK+M+GBzfZGPcmpEX+SZyiHI03X3fHtdKDnlv33hvYBiFKZ7/PLJEgyVCIZOuv/pCWFam8ilXQR4S0qaP85vrskl5u1cr1rFFoiCvTQKrebzoPe5lHmGwpCQr55zkXJqxA1VZ7pFaHPxvJutMD9b/5pNLgu5n2aghQzwEe+m/6jzDpaey42VFwT4sPNkafE5DFV5Ew5MMiPVd1d6uh7EXlIo6ENW5Aj3cGwezts2IU4WaazM1kk4XMh1Q4eJRrq0y0gw+Wl3aLyShv18QPbEdzNobLIt70oCzvQWBalcUD/PFK7OGLK6TRo7nflInsYXdoCN5Je4hmLVMU8qrym7P21nYnz0Y+RlLE39EXJqFoknHiIL5qJhgLiUiVbUWa4wpr0mK0aBhuJRk5KlCrpY0PgRZcFQtm2+IONsxiU=
+  on:
+    tags: true
+    repo: protochan/stream

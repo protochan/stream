@@ -29,13 +29,13 @@ module.exports.extend = function (constructor) {
     return this.attach((obj, next) => {
       obj.forEach(next);
     });
-  }
+  };
 
   constructor.prototype.accumulate = function (acc) {
     return this.attach((obj, next) => {
       next({ obj, acc });
     });
-  }
+  };
 
   constructor.prototype.first = function (n = 1) {
     let idx = 0;
@@ -45,5 +45,16 @@ module.exports.extend = function (constructor) {
       }
       idx += 1;
     });
-  }
-}
+  };
+
+  constructor.prototype.unique = function (fn = obj => obj) {
+    const set = new Set();
+    return this.attach((obj, next) => {
+      const uid = fn(obj);
+      if (!set.has(uid)) {
+        set.add(fn(obj));
+        next(obj);
+      }
+    });
+  };
+};

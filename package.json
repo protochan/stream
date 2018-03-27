@@ -2,7 +2,12 @@
   "name": "@protochan/stream",
   "version": "0.0.1",
   "description": "Asynchronous, lightweight functional streams",
-  "main": "stream.js",
+  "homepage": "https://protochan.com",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/protochan/stream.git"
+  },
+  "main": "src/stream.js",
   "scripts": {
     "test": "tap test/"
   },

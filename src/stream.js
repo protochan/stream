@@ -91,29 +91,10 @@ const Stream = class {
   //
   //   return child;
   // }
-  merge(...streams) {
-    const child = this.attach();
-    for (let i = 0; i < streams.length; i += 1) {
-      streams[i]
-        .on(obj => child.next(obj))
-        .error(e => child.nextError(e));
-    }
-    return child;
-  }
-
-  unique(fn = obj => obj) {
-    const set = new Set();
-    return this.attach((obj, next) => {
-      const uid = fn(obj);
-      if (!set.has(uid)) {
-        set.add(fn(obj));
-        next(obj);
-      }
-    });
-  }
 };
 
 require('./operators/generic.js').extend(Stream);
 require('./operators/list.js').extend(Stream);
 require('./operators/time.js').extend(Stream);
+require('./operators/multiple.js').extend(Stream);
 module.exports = Stream;

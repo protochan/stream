@@ -25,35 +25,18 @@
 'use strict';
 
 module.exports.extend = function (constructor) {
-  constructor.prototype.on = function (fn) {
-    return this.attach((obj, next) => {
-      fn(obj);
-      next(obj);
-    });
+  constructor.prototype.pipe = function (stream) {
+    this.attach(obj => stream.next(obj)).error(e => stream.nextError(e));
+    // this.next = obj => this.fn(obj, o => stream.next(o));
   }
 
-  constructor.prototype.filter = function (fn) {
-    return this.attach((obj, next) => {
-      if (fn(obj)) {
-        next(obj);
+  constructor.prototype.merge = function (...streams) {
+      const child = this.attach();
+      for (let i = 0; i < streams.length; i += 1) {
+        streams[i]
+          .on(obj => child.next(obj))
+          .error(e => child.nextError(e));
       }
-    });
-  }
-
-  constructor.prototype.map = function (fn) {
-    return this.attach((obj, next) => next(fn(obj)));
-  }
-
-  constructor.prototype.flatmap = function (fn) {
-    return this.attach((obj, next, err) => {
-      // fn returns a stream
-      fn(obj).on(next).error(err);
-    });
-  }
-
-  constructor.prototype.error = function (fn) {
-    const child = this.attach();
-    child.nextError = fn;
-    return child;
-  }
-}
+      return child;
+    }
+};
