@@ -1,6 +1,6 @@
 {
   "name": "@protochan/stream",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Asynchronous, lightweight functional streams",
   "homepage": "https://protochan.com",
   "repository" : {
