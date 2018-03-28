@@ -30,7 +30,7 @@ module.exports.extend = function (constructor) {
       fn(obj);
       next(obj);
     });
-  }
+  };
 
   constructor.prototype.filter = function (fn) {
     return this.attach((obj, next) => {
@@ -38,22 +38,22 @@ module.exports.extend = function (constructor) {
         next(obj);
       }
     });
-  }
+  };
 
   constructor.prototype.map = function (fn) {
     return this.attach((obj, next) => next(fn(obj)));
-  }
+  };
 
   constructor.prototype.flatmap = function (fn) {
     return this.attach((obj, next, err) => {
       // fn returns a stream
       fn(obj).on(next).error(err);
     });
-  }
+  };
 
   constructor.prototype.error = function (fn) {
     const child = this.attach();
     child.nextError = fn;
     return child;
-  }
-}
+  };
+};

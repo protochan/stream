@@ -25,7 +25,7 @@
 'use strict';
 
 module.exports.extend = function (constructor) {
-  constructor.prototype.iterate = function() {
+  constructor.prototype.iterate = function () {
     return this.attach((obj, next) => {
       obj.forEach(next);
     });
@@ -45,6 +45,35 @@ module.exports.extend = function (constructor) {
       }
       idx += 1;
     });
+  };
+
+  constructor.prototype.queue = function (dispense) {
+    let queue = [];
+    let offset = 0;
+
+    let backlog = 0;
+    const child = this.attach((obj) => {
+      queue.push(obj);
+      if (backlog > 0) {
+        dispense.next();
+        backlog -= 1;
+      }
+    });
+
+    dispense.on((count = 1) => {
+      const num = Math.min(count, queue.length - offset);
+      backlog += Math.max(0, count - (queue.length - offset));
+      for (let i = 0; i < num; i += 1) {
+        child.propagate(queue[offset + i]);
+      }
+      offset += num;
+      if (offset >= queue.length) {
+        offset = 0;
+        queue = [];
+      }
+    });
+
+    return child;
   };
 
   constructor.prototype.unique = function (fn = obj => obj) {
