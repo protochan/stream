@@ -62,7 +62,7 @@ module.exports.extend = function (constructor) {
   constructor.every = function (interval, count) {
     let id;
     let n = count;
-    const str = new Stream(
+    const str = new constructor(
       (o, next) => next(o),
       () => clearInterval(id),
     );
