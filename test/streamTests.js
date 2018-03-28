@@ -176,50 +176,29 @@ tap.test('Stream.accumulate', (t) => {
   t.end();
 });
 
-// tap.test('Stream.queue', (t) => {
-//   const str = new Stream();
-//   const result = [];
-//   const dispense = new Stream();
-//
-//   str.queue(dispense).on(obj => result.push(obj));
-//
-//   str.next(5);
-//   str.next(8);
-//   str.next(1);
-//
-//   t.strictSame(result, [], 'Stream.queue doesn\'t propagate without dispense');
-//
-//   dispense.next(2);
-//   t.strictSame(result, [5, 8], 'Stream.queue dispenses objects');
-//   dispense.next(3);
-//   t.strictSame(result, [5, 8, 1], 'Stream.queue dispenses up to queue size');
-//   str.next(11);
-//   str.next(12);
-//   str.next(14);
-//   t.strictSame(result, [5, 8, 1, 11, 12], 'Stream.queue clears backlog when possible');
-//   t.end();
-// });
+tap.test('Stream.queue', (t) => {
+  const str = new Stream();
+  const result = [];
+  const dispense = new Stream();
 
-// tap.test('Stream.zip', (t) => {
-//   const str = new Stream();
-//   const str2 = new Stream();
-//   const str3 = new Stream();
-//
-//   const result = [];
-//   str.zip(str2, str3)
-//     .on(obj => result.push(obj));
-//
-//   str2.next(5);
-//   str2.next(3);
-//   str3.next(4);
-//   str.next(1);
-//   str.next(8);
-//   str3.next(11);
-//   str.next(2);
-//
-//   t.strictSame(result, [[1, 3, 4], [8, 3, 4], [2, 3, 11]], 'Stream.zip combines latest into array');
-//   t.end();
-// });
+  str.queue(dispense).on(obj => result.push(obj));
+
+  str.next(5);
+  str.next(8);
+  str.next(1);
+
+  t.strictSame(result, [], 'Stream.queue doesn\'t propagate without dispense');
+
+  dispense.next(2);
+  t.strictSame(result, [5, 8], 'Stream.queue dispenses objects');
+  dispense.next(3);
+  t.strictSame(result, [5, 8, 1], 'Stream.queue dispenses up to queue size');
+  str.next(11);
+  str.next(12);
+  str.next(14);
+  t.strictSame(result, [5, 8, 1, 11, 12], 'Stream.queue clears backlog when possible');
+  t.end();
+});
 
 tap.test('Stream.error', (t) => {
   const str = new Stream();

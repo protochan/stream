@@ -27,7 +27,6 @@
 module.exports.extend = function (constructor) {
   constructor.prototype.pipe = function (stream) {
     this.attach(obj => stream.next(obj)).error(e => stream.nextError(e));
-    // this.next = obj => this.fn(obj, o => stream.next(o));
   }
 
   constructor.prototype.merge = function (...streams) {

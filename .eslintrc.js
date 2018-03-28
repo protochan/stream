@@ -2,11 +2,10 @@ module.exports = {
   "root": true,
   "extends": "airbnb-base",
   "rules": {
-    "no-bitwise": "off",
+    "no-param-reassign": "off",
     "strict": "off",
     "func-names": [
       "error", "never"
     ]
-  }
+  },
 };
-

@@ -24,8 +24,6 @@
 
 'use strict';
 
-// const Queue = require('../util/queue.js');
-
 const Stream = class {
   constructor(
     fn = (obj, next) => next(obj),
@@ -69,32 +67,11 @@ const Stream = class {
     this.children.push(child);
     return child;
   }
-
-  // queue(dispense) {
-  //   const queue = new Queue();
-  //   let backlog = 0;
-  //   const child = this.attach((obj) => {
-  //     queue.enqueue(obj);
-  //     if (backlog > 0) {
-  //       dispense.next();
-  //       backlog -= 1;
-  //     }
-  //   });
-  //
-  //   dispense.on((count = 1) => {
-  //     const num = Math.min(count, queue.length());
-  //     backlog += Math.max(0, count - queue.length());
-  //     for (let i = 0; i < num; i += 1) {
-  //       child.propagate(queue.dequeue());
-  //     }
-  //   });
-  //
-  //   return child;
-  // }
 };
 
 require('./operators/generic.js').extend(Stream);
 require('./operators/list.js').extend(Stream);
 require('./operators/time.js').extend(Stream);
 require('./operators/multiple.js').extend(Stream);
+
 module.exports = Stream;
