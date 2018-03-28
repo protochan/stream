@@ -27,15 +27,15 @@
 module.exports.extend = function (constructor) {
   constructor.prototype.pipe = function (stream) {
     this.attach(obj => stream.next(obj)).error(e => stream.nextError(e));
-  }
+  };
 
   constructor.prototype.merge = function (...streams) {
-      const child = this.attach();
-      for (let i = 0; i < streams.length; i += 1) {
-        streams[i]
-          .on(obj => child.next(obj))
-          .error(e => child.nextError(e));
-      }
-      return child;
+    const child = this.attach();
+    for (let i = 0; i < streams.length; i += 1) {
+      streams[i]
+        .on(obj => child.next(obj))
+        .error(e => child.nextError(e));
     }
+    return child;
+  };
 };
